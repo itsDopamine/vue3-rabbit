@@ -1,4 +1,6 @@
 # 本文件夹是 全局样式 文件夹
-
 ├─styles
-│  └─element    ---   elementPlus主题样式定制
+│  │  common.scss  ---  重置样式
+│  └─element
+│       index.scss   ---  elementPlus主题样式定制
+

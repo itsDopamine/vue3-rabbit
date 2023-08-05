@@ -1,4 +1,5 @@
-import './assets/main.css'
+// 引入初始化样式文件
+import '@/styles/common.scss'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
@@ -8,6 +9,7 @@ import router from './router'
 import { getCategoryAPI } from '@/apis/testAPI'
 
 const app = createApp(App)
+
 
 // 测试接口函数
 getCategoryAPI().then(res => {
