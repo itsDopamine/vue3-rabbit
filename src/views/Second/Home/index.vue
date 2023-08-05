@@ -1,11 +1,19 @@
 <template>
-  <h2>首页</h2>
+  <div class="container">
+    <HomeCategory></HomeCategory>
+    <HomeBanner></HomeBanner>
+  </div>
+  <HomeNew></HomeNew>
+  <HomeHot></HomeHot>
+  <homeProduct></homeProduct>
 </template>
 
-<script>
-export default {
-
-}
+<script setup>
+import HomeCategory from './components/HomeCategory.vue'
+import HomeBanner from './components/HomeBanner.vue'
+import HomeNew from './components/HomeNew.vue'
+import HomeHot from './components/HomeHot.vue'
+import homeProduct from './components/HomeProduct.vue'
 </script>
 
 <style></style>
