@@ -5,13 +5,16 @@ import { createPinia } from 'pinia'
 
 import App from './App.vue'
 import router from './router'
-// import ElementPlus from 'element-plus'
-// import '@/styles/element/index.scss'
+import { getCategoryAPI } from '@/apis/testAPI'
 
 const app = createApp(App)
 
+// 测试接口函数
+getCategoryAPI().then(res => {
+  console.log(res);
+})
+
 app.use(createPinia())
 app.use(router)
-// app.use(ElementPlus)
 
 app.mount('#app')
