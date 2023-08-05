@@ -1,12 +1,23 @@
 <script setup>
+import { getNewGoodsAPI } from "@/apis/home";
+import { onMounted, ref } from "vue";
 import HomePanel from "./HomePanel.vue";
 
+const newList = ref([])
+const getNewGoodsList = async () => {
+  const { result } = await getNewGoodsAPI()
+  newList.value = result
+}
+
+onMounted(() => {
+  getNewGoodsList()
+})
 </script>
 
 <template>
   <HomePanel title="新鲜好物" subTitle="新鲜出炉 品质靠谱">
     <!-- 下面是插槽主体内容模版 -->
-    <!-- <ul class="goods-list">
+    <ul class="goods-list">
       <li v-for="item in newList" :key="item.id">
         <RouterLink to="/">
           <img :src="item.picture" alt="" />
@@ -14,7 +25,7 @@ import HomePanel from "./HomePanel.vue";
           <p class="price">&yen;{{ item.price }}</p>
         </RouterLink>
       </li>
-    </ul> -->
+    </ul>
 
   </HomePanel>
 </template>
