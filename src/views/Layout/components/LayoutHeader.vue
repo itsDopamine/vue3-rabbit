@@ -1,20 +1,9 @@
 <script setup>
-import { getCategoryAPI } from '@/apis/layout';
-import { onMounted, ref } from 'vue';
+import { useNavListStore } from '@/stores/navList';
 
-/* 0.定义数据 */
-const navList = ref([])
+/* 调用 pinia 函数 */
+const navListStore = useNavListStore()
 
-/* 1.封装API接口到函数：方便请求接口前后的其他处理业务 */
-const getCategory = async () => {
-  const data = await getCategoryAPI()
-  // console.log(data.result);
-  navList.value = data.result
-}
-
-onMounted(() => {
-  getCategory()
-})
 </script>
 
 <template>
@@ -27,7 +16,7 @@ onMounted(() => {
         <li class="home">
           <RouterLink to="/">首页</RouterLink>
         </li>
-        <li class="home" v-for="item in navList" :key="item.id">
+        <li class="home" v-for="item in navListStore.navList" :key="item.id">
           <RouterLink to="/">{{ item.name }}</RouterLink>
         </li>
       </ul>
