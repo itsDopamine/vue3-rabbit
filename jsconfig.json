@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      // 该配置项目只做联想提示，真正的匹配路径在vite.config.js
+      "@/*":[
+        "src/*"
+      ]
+    }
+  }
+}
