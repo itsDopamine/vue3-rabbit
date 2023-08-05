@@ -1,5 +1,20 @@
 <script setup>
+import { getCategoryAPI } from '@/apis/layout';
+import { onMounted, ref } from 'vue';
 
+/* 0.定义数据 */
+const navList = ref([])
+
+/* 1.封装API接口到函数：方便请求接口前后的其他处理业务 */
+const getCategory = async () => {
+  const data = await getCategoryAPI()
+  console.log(data.result);
+  navList.value = data.result
+}
+
+onMounted(() => {
+  getCategory()
+})
 </script>
 
 <template>
@@ -12,14 +27,8 @@
         <li class="home">
           <RouterLink to="/">首页</RouterLink>
         </li>
-        <li>
-          <RouterLink to="/">居家</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/">美食</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/">服饰</RouterLink>
+        <li class="home" v-for="item in navList" :key="item.id">
+          <RouterLink to="/">{{ item.name }}</RouterLink>
         </li>
       </ul>
       <div class="search">

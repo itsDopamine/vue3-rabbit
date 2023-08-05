@@ -6,13 +6,13 @@ import { createPinia } from 'pinia'
 
 import App from './App.vue'
 import router from './router'
-import { getCategoryAPI } from '@/apis/testAPI'
+import { testCategoryAPI } from '@/apis/testAPI'
 
 const app = createApp(App)
 
 
 // 测试接口函数
-getCategoryAPI().then(res => {
+testCategoryAPI().then(res => {
   console.log(res);
 })
 
