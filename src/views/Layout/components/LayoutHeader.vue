@@ -8,7 +8,7 @@ const navList = ref([])
 /* 1.封装API接口到函数：方便请求接口前后的其他处理业务 */
 const getCategory = async () => {
   const data = await getCategoryAPI()
-  console.log(data.result);
+  // console.log(data.result);
   navList.value = data.result
 }
 
