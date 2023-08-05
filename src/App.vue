@@ -2,7 +2,7 @@
 </script>
 
 <template>
-  <el-button @click="abc">我是 ElButton</el-button>
+  <el-button type="primary" @click="abc">我是 ElButton</el-button>
 </template>
 
 <style scoped></style>

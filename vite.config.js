@@ -6,6 +6,9 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
+// 导入对应包
+import ElementPlus from 'unplugin-element-plus/vite'
+
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
@@ -14,13 +17,27 @@ export default defineConfig({
       resolvers: [ElementPlusResolver()],
     }),
     Components({
-      resolvers: [ElementPlusResolver()],
+      // 1. 配置elementPlus采用sass样式配色系统
+      resolvers: [ElementPlusResolver({ importStyle: "sass" })],
     }),
+    ElementPlus({
+      useSourece: true
+    })
   ],
   resolve: {
     alias: {
-      // 实际路径转换：@ -> src
+      // 0. 实际路径转换：@ -> src
       '@': fileURLToPath(new URL('./src', import.meta.url))
+    }
+  },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        // 2. 自动导入定制化样式文件进行样式覆盖
+        additionalData: `
+          @use "@/styles/element/index.scss" as *;
+        `,
+      }
     }
   }
 })
