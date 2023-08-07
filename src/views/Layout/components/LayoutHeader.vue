@@ -18,7 +18,7 @@ const navListStore = useNavListStore()
         </li>
         <li class="home" v-for="item in navListStore.navList" :key="item.id">
           <!-- <RouterLink to="/" @click="$router.push('/category/' + item.id)">{{ item.name }}</RouterLink> -->
-          <RouterLink :to="`/category/${item.id}`">{{ item.name }}</RouterLink>
+          <RouterLink active-class="active" :to="`/category/${item.id}`">{{ item.name }}</RouterLink>
         </li>
       </ul>
       <div class="search">
