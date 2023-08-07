@@ -26,3 +26,12 @@ export function getNewGoodsAPI () {
 export function getHotGoodsAPI () {
   return httpInst.get('/home/hot')
 }
+
+/**
+ * @description: 获取商品列表数据
+ * @param {*}
+ * @return {Promise}
+ */
+export function getProductListAPI () {
+  return httpInst.get('/home/goods')
+}

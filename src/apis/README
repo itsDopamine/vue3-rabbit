@@ -2,4 +2,4 @@
 ├─apis
 │   testAPI.js    ---    测试 axios 基础实例
 │   layout.js     ---    layout 页 相关数据的API接口
-│   layout.js     ---    HomeBanner 组件 相关数据的API接口
+│   home.js       ---    Home 页 相关数据的API接口
