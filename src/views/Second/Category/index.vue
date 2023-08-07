@@ -1,9 +1,10 @@
 <script setup>
 import { getSubCategoryAPI } from '@/apis/category';
+import { getBannerAPI } from '@/apis/home';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
-// 获取路由数据
+/* 1. 获取路由数据, 等价于this.$route */
 const routeData = useRoute()
 
 const subCategory = ref({})
@@ -11,8 +12,22 @@ const getSubCategory = async () => {
   const { result } = await getSubCategoryAPI(routeData.params.id)
   subCategory.value = result
 }
-onMounted(() => getSubCategory())
+
+/* 2. 获取 Banner 数据 */
+const bannerList = ref([])
+
+const getBannerList = async () => {
+  const { result } = await getBannerAPI({ distributionSite: '2' })
+  console.log(result);
+  bannerList.value = result
+}
+
+onMounted(() => {
+  getSubCategory()
+  getBannerList()
+})
 </script>
+
 
 <template>
   <div class="top-category">
@@ -24,12 +39,32 @@ onMounted(() => getSubCategory())
           <el-breadcrumb-item>{{ subCategory.name }}</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
+      <!-- 轮播图 -->
+      <div class="home-banner">
+        <el-carousel height="500px">
+          <el-carousel-item v-for="item in bannerList" :key="item.id">
+            <img :src="item.imgUrl" alt="">
+          </el-carousel-item>
+        </el-carousel>
+      </div>
     </div>
   </div>
 </template>
 
 
 <style scoped lang="scss">
+.home-banner {
+  width: 1240px;
+  height: 500px;
+  margin: 0 auto;
+  z-index: 98;
+
+  img {
+    width: 100%;
+    height: 500px;
+  }
+}
+
 .top-category {
   h3 {
     font-size: 28px;

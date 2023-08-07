@@ -5,8 +5,17 @@ import httpInst from "@/utils/http";
  * @param {*}
  * @return {Promise}
  */
-export function getBannerAPI () {
-  return httpInst.get('/home/banner')
+export function getBannerAPI (params = {}) {
+  /* distributionSite：请求来源页
+     1: 首页（Home），默认
+     2: 分类（Category）
+  */
+  const { distributionSite = '1' } = params
+  return httpInst.get('/home/banner', {
+    params: {
+      distributionSite
+    }
+  })
 }
 
 /**
