@@ -32,7 +32,7 @@ const router = createRouter({
       component: Layout,
       children: [
         { path: '', component: Home }, // path路径为空,会作为默认页一部分最开始渲染
-        { path: 'category', component: Category },
+        { path: 'category/:id', component: Category },
       ]
     },
     { path: '/login', component: Login },
