@@ -14,10 +14,10 @@ const navListStore = useNavListStore()
       </h1>
       <ul class="app-header-nav">
         <li class="home">
-          <RouterLink to="/">首页</RouterLink>
+          <RouterLink active-class="active" to="/">首页</RouterLink>
+          <!-- <RouterLink to="/">首页</RouterLink> -->
         </li>
         <li class="home" v-for="item in navListStore.navList" :key="item.id">
-          <!-- <RouterLink to="/" @click="$router.push('/category/' + item.id)">{{ item.name }}</RouterLink> -->
           <RouterLink active-class="active" :to="`/category/${item.id}`">{{ item.name }}</RouterLink>
         </li>
       </ul>

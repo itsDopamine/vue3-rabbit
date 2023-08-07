@@ -33,3 +33,6 @@ npm run build
 ```sh
 npm run lint
 ```
+
+<!-- Bug -->
+根路由和商品详情页的路由样式失效！！！
