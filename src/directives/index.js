@@ -13,13 +13,15 @@ export const lazyPlugin = {
         // console.log(el);
         // console.log(binding.value);
         // 3. 使用VueUse监听视口变化
-        useIntersectionObserver(
+        const { stop } = useIntersectionObserver(
           el, // 监听对象
           ([{ isIntersecting }]) => {
             // isIntersecting：是否进入视口区域
             if (isIntersecting) {
               el.src = binding.value
               console.log(binding.value);
+              // 6. 避免重复监听
+              stop()
             }
           },
         )
