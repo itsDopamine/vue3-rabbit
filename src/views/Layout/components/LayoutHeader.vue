@@ -17,6 +17,7 @@ const navListStore = useNavListStore()
           <RouterLink to="/">首页</RouterLink>
         </li>
         <li class="home" v-for="item in navListStore.navList" :key="item.id">
+          <!-- <RouterLink to="/" @click="$router.push('/category/' + item.id)">{{ item.name }}</RouterLink> -->
           <RouterLink :to="`/category/${item.id}`">{{ item.name }}</RouterLink>
         </li>
       </ul>
