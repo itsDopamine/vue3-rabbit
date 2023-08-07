@@ -1,16 +1,17 @@
 <script setup>
-import { getSubCategoryAPI } from '@/apis/category';
+import { getCategoryDataAPI } from '@/apis/category';
 import { getBannerAPI } from '@/apis/home';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
+import GoodsItem from '../Home/components/GoodsItem.vue';
 
 /* 1. 获取路由数据, 等价于this.$route */
 const routeData = useRoute()
 
-const subCategory = ref({})
-const getSubCategory = async () => {
-  const { result } = await getSubCategoryAPI(routeData.params.id)
-  subCategory.value = result
+const categoryData = ref({})
+const getCategoryData = async () => {
+  const { result } = await getCategoryDataAPI(routeData.params.id)
+  categoryData.value = result
 }
 
 /* 2. 获取 Banner 数据 */
@@ -23,9 +24,10 @@ const getBannerList = async () => {
 }
 
 onMounted(() => {
-  getSubCategory()
+  getCategoryData()
   getBannerList()
 })
+
 </script>
 
 
@@ -36,7 +38,7 @@ onMounted(() => {
       <div class="bread-container">
         <el-breadcrumb separator=">">
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item>{{ subCategory.name }}</el-breadcrumb-item>
+          <el-breadcrumb-item>{{ categoryData.name }}</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <!-- 轮播图 -->

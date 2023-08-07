@@ -5,7 +5,7 @@ import httpInst from "@/utils/http";
  * @param {*}
  * @return {Promise}
  */
-export function getSubCategoryAPI (id) {
+export function getCategoryDataAPI (id) {
   return httpInst.get('/category', {
     params: {
       id
