@@ -1,40 +1,13 @@
 <script setup>
-import { getCategoryDataAPI } from '@/apis/category';
-import { getBannerAPI } from '@/apis/home';
-import { onMounted, ref } from 'vue';
-import { onBeforeRouteUpdate, useRoute } from 'vue-router';
+import { useCategory } from './composables/useCategory'
+import { useBanner } from './composables/useBanner'
 import GoodsItem from '../Home/components/GoodsItem.vue';
 
 /* 1. 获取路由数据, 等价于this.$route */
-const routeData = useRoute()
-
-const categoryData = ref({})
-// 初次进入页面使用本路由参数 routeData.params.id
-// 路由切换时，则使用传入的路由参数 routeData.params.id
-const getCategoryData = async (id = routeData.params.id) => {
-  const { result } = await getCategoryDataAPI(id)
-  categoryData.value = result
-}
+const categoryData = useCategory()
 
 /* 2. 获取 Banner 数据 */
-const bannerList = ref([])
-
-const getBannerList = async () => {
-  const { result } = await getBannerAPI({ distributionSite: '2' })
-  console.log(result);
-  bannerList.value = result
-}
-
-onMounted(() => {
-  getCategoryData()
-  getBannerList()
-})
-
-/* 3. 使用路由导航守卫更新路由切换时的页面数据 */
-onBeforeRouteUpdate((to) => {
-  // 路由参数发生变化，将变化的参数传入接口重新请求数据
-  getCategoryData(to.params.id)
-})
+const bannerList = useBanner()
 
 </script>
 

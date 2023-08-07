@@ -19,7 +19,7 @@ export const lazyPlugin = {
             // isIntersecting：是否进入视口区域
             if (isIntersecting) {
               el.src = binding.value
-              console.log(binding.value);
+              // console.log(binding.value);
               // 6. 避免重复监听
               stop()
             }
