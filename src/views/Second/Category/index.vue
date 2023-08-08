@@ -48,7 +48,7 @@ const bannerList = useBanner()
         <h3>- {{ item.name }}-</h3>
       </div>
       <div class="body">
-        <GoodsItem v-for="good in item.goods" :goods="good" :key="good.id" />
+        <GoodsItem v-for="good in item.goods" :parent-id="categoryData.id" :goods="good" :key="good.id" />
       </div>
     </div>
   </div>

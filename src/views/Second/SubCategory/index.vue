@@ -75,7 +75,9 @@ const load = async (data = reqData.value) => {
       <!-- 4.2 记载完毕，停止监听 -->
       <div class="body" v-infinite-scroll="load" :infinite-scroll-disabled="disabled">
         <!-- 商品列表-->
-        <GoodsItem :goods="goods" v-for="goods in subDataList.items" :key="goods.id"></GoodsItem>
+        <GoodsItem :parent-id="categoryFilterData.parentId" :goods="goods" v-for="goods in subDataList.items"
+          :key="goods.id">
+        </GoodsItem>
       </div>
     </div>
   </div>

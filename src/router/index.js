@@ -7,6 +7,7 @@ import Register from '@/views/Login/register.vue'
 import Home from '@/views/Second/Home/index.vue'
 import Category from '@/views/Second/Category/index.vue'
 import SubCategory from '@/views/Second/SubCategory/index.vue'
+import Detail from "@/views/Second/Detail/index.vue"
 import { h } from 'vue'
 
 
@@ -58,9 +59,24 @@ const router = createRouter({
           component: { render: () => h(RouterView) },
           children: [
             { path: '', component: Category },
-            { path: ':sid', component: SubCategory }
+            { path: ':sid', component: SubCategory },
+            {
+              path: 'detail/:tid',
+              component: { render: () => h(RouterView) },
+              children: [
+                { path: '', component: Detail },
+              ]
+            }
           ]
         },
+        // {
+        //   path: 'detail/:id',
+        //   component: { render: () => h(RouterView) },
+        //   children: [
+        //     { path: '', component: Detail },
+        //   ]
+        // }
+
       ]
     },
     { path: '/login', component: Login },
