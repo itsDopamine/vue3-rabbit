@@ -1,6 +1,18 @@
 <script setup>
+import { useRoute } from "vue-router"
+import { getGoodsInfoAPI } from '@/apis/detail'
+import { onMounted, ref } from "vue";
 
-
+const goodInfo = ref({})
+const routeData = useRoute()
+console.log(routeData);
+const getGoodsInfo = async (id = routeData.params.tid) => {
+  const { result } = await getGoodsInfoAPI(id)
+  console.log(result);
+  console.log(result.categories[0].id);
+  goodInfo.value = result
+}
+onMounted(() => getGoodsInfo())
 </script>
 
 <template>
@@ -9,11 +21,23 @@
       <div class="bread-container">
         <el-breadcrumb separator=">">
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item :to="{ path: '/' }">母婴
+          <!-- 重要！！！
+            1. 错误原因：
+              1.1 初始渲染阶段：（空对象）goods -> {}
+              1.2 使用点语法会返回undefined：  .categories-> undefined -> undefined[1]
+              1.3 undefined取下标则报错
+
+            2. 解决方案
+              2.1 可选链的语法：?.
+              2.2 使用 v-if 手动控制渲染时机，保证只有数据存在才渲染
+           -->
+          <el-breadcrumb-item :to="{ path: `/category/${goodInfo.categories?.[1].id}` }">{{ goodInfo.categories?.[1].name
+          }}
           </el-breadcrumb-item>
-          <el-breadcrumb-item :to="{ path: '/' }">跑步鞋
+          <el-breadcrumb-item :to="{ path: `/category/${goodInfo.categories?.[1].id}/${goodInfo.categories?.[0].id}` }">{{
+            goodInfo.categories?.[0].name }}
           </el-breadcrumb-item>
-          <el-breadcrumb-item>抓绒保暖，毛毛虫子儿童运动鞋</el-breadcrumb-item>
+          <el-breadcrumb-item>{{ goodInfo.name }}</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <!-- 商品信息 -->
