@@ -1,5 +1,6 @@
 <script setup>
-import { ref } from "vue"
+import { useMouseInElement } from "@vueuse/core"
+import { ref, watch } from "vue"
 
 /* 1. 获取图片列表 */
 defineProps({
@@ -14,16 +15,48 @@ const changeImg = (idx) => {
   activeIndex.value = idx
 }
 
+/* 3.1 放大镜效果 - 滑块跟随鼠标移动  */
+const target = ref(null) // 监听的DOM元素
+const { elementX, elementY, isOutside } = useMouseInElement(target) // 获取鼠标相对位置
+const left = ref(0)
+const top = ref(0)
+
+// 控制滑块跟随鼠标移动（监听elementX/Y变化，并重新设置left/top）
+watch([elementX, elementY, isOutside], () => {
+  // 根据有效范围计算蒙版的位置
+  // 有效范围：根据大图和蒙层滑块的大小计算
+  // console.log(isOutside);
+  if (!isOutside.value) {
+    // 横向处理
+    if (elementX.value < 100) { // 左边界处理
+      left.value = 0
+    } else if (elementX.value > 100 && elementX.value < 300) {
+      left.value = (elementX.value - 100)
+    } else if (elementX.value > 300) { // 右边界处理
+      left.value = 200
+    }
+
+    // 纵向处理
+    if (elementY.value < 100) { // 上边界处理
+      top.value = 0
+    } else if (elementY.value > 100 && elementY.value < 300) {
+      top.value = (elementY.value - 100)
+    } else if (elementY.value > 300) { // 下边界处理
+      top.value = 200
+    }
+  }
+})
 </script>
 
 
 <template>
+  <!-- <p>{{ elementX }}, {{ elementY }}, {{ isOutside }}</p> -->
   <div class="goods-image">
     <!-- 左侧大图-->
     <div class="middle" ref="target">
       <img :src="imageList[activeIndex]" alt="" />
       <!-- 蒙层小滑块 -->
-      <div class="layer" :style="{ left: `0px`, top: `0px` }"></div>
+      <div class="layer" :style="{ left: `${left}px`, top: `${top}px` }"></div>
     </div>
     <!-- 小图列表 -->
     <ul class="small">

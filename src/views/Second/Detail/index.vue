@@ -25,7 +25,6 @@ onBeforeRouteUpdate((to) => {
   getGoodsInfo(to.params.tid)
 })
 
-/* 3.  */
 
 </script>
 
