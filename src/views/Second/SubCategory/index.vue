@@ -1,4 +1,36 @@
 <script setup>
+import { getCategoryFilterAPI, getSubCategoryAPI } from "@/apis/category";
+import { onMounted, ref } from "vue";
+import { useRoute } from "vue-router";
+import GoodsItem from '../Home/components/GoodsItem.vue';
+
+/* 1. 获取面包屑导航数据 */
+const categoryFilterData = ref([])
+const routeData = useRoute()
+// console.log(routeData);
+const getCategoryFilter = async (id = routeData.params.sid) => {
+  const { result } = await getCategoryFilterAPI(id)
+  categoryFilterData.value = result
+}
+
+onMounted(() => getCategoryFilter())
+
+/* 2. 获取二级分类数据 */
+const subDataList = ref({})
+// 请求数据
+const reqData = ref({
+  categoryId: routeData.params.sid,
+  page: 1,
+  pageSize: 20,
+  sortField: 'publishTime' // 筛选标签
+})
+const getSubCategory = async (data = reqData.value) => {
+  const { result } = await getSubCategoryAPI(data)
+  subDataList.value = result
+}
+onMounted(() => getSubCategory())
+
+/*  */
 
 </script>
 
@@ -8,19 +40,21 @@
     <div class="bread-container">
       <el-breadcrumb separator=">">
         <el-breadcrumb-item exact :to="{ path: '/' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item exact :to="{ path: '/' }">居家
-        </el-breadcrumb-item>
-        <el-breadcrumb-item>居家生活用品</el-breadcrumb-item>
+        <el-breadcrumb-item exact :to="{ path: `/category/${categoryFilterData.parentId}` }">{{
+          categoryFilterData.parentName
+        }}</el-breadcrumb-item>
+        <el-breadcrumb-item>{{ categoryFilterData.name }}</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div class="sub-container">
-      <el-tabs>
+      <el-tabs v-model="reqData.sortField">
         <el-tab-pane label="最新商品" name="publishTime"></el-tab-pane>
         <el-tab-pane label="最高人气" name="orderNum"></el-tab-pane>
         <el-tab-pane label="评论最多" name="evaluateNum"></el-tab-pane>
       </el-tabs>
       <div class="body">
         <!-- 商品列表-->
+        <GoodsItem :goods="goods" v-for="goods in subDataList.items" :key="goods.id"></GoodsItem>
       </div>
     </div>
   </div>
@@ -80,7 +114,5 @@
     display: flex;
     justify-content: center;
   }
-
-
 }
 </style>
