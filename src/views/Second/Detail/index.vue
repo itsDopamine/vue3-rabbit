@@ -3,9 +3,7 @@
 import { onBeforeRouteUpdate, useRoute } from "vue-router"
 import { getGoodsInfoAPI } from '@/apis/detail'
 import { onMounted, ref } from "vue";
-import ImageView from "@/components/ImageView/index.vue"
 import DetailHot from "./components/DetailHot.vue";
-import XtxSku from "@/components/XtxSku/index.vue"
 
 /* 1. 获取商品详情信息*/
 const goodInfo = ref({})
@@ -62,7 +60,7 @@ const skuChange = (sku) => {
           <div class="goods-info">
             <div class="media">
               <!-- 图片预览区 -->
-              <ImageView :imageList="goodInfo.mainPictures"></ImageView>
+              <XtxImageView :imageList="goodInfo.mainPictures"></XtxImageView>
 
               <!-- 统计数量 -->
               <ul class="goods-sales">
