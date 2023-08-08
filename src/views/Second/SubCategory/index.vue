@@ -26,7 +26,7 @@ const reqData = ref({
 })
 const getSubCategory = async (data = reqData.value) => {
   const { result } = await getSubCategoryAPI(data)
-  console.log(result);
+  // console.log(result);
   // 因接口对不同标签的返回数据一致，此处对返回商品列表随机打乱处理
   result.items.sort(() => Math.random() - 0.5)
   subDataList.value = result
@@ -40,6 +40,16 @@ const tabChange = () => {
 }
 
 /* 4.添加列表触底自动加载数据功能 */
+const disabled = ref(false)
+const load = async (data = reqData.value) => {
+  reqData.value.page++ // 重置页码
+  const { result } = await getSubCategoryAPI(data)
+  subDataList.value.items = [...subDataList.value.items, ...result.items]
+  // 加载完毕，停止监听
+  if (result.items.length === 0) {
+    disabled.value = true
+  }
+}
 </script>
 
 <template>
@@ -61,7 +71,9 @@ const tabChange = () => {
         <el-tab-pane label="最高人气" name="orderNum"></el-tab-pane>
         <el-tab-pane label="评论最多" name="evaluateNum"></el-tab-pane>
       </el-tabs>
-      <div class="body">
+      <!-- 4.1 绑定触底指令 -->
+      <!-- 4.2 记载完毕，停止监听 -->
+      <div class="body" v-infinite-scroll="load" :infinite-scroll-disabled="disabled">
         <!-- 商品列表-->
         <GoodsItem :goods="goods" v-for="goods in subDataList.items" :key="goods.id"></GoodsItem>
       </div>
