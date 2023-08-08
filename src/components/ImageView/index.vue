@@ -20,6 +20,7 @@ const target = ref(null) // 监听的DOM元素
 const { elementX, elementY, isOutside } = useMouseInElement(target) // 获取鼠标相对位置
 const left = ref(0)
 const top = ref(0)
+const showBigImg = ref(false)
 
 // 控制滑块跟随鼠标移动（监听elementX/Y变化，并重新设置left/top）
 watch([elementX, elementY, isOutside], () => {
@@ -44,6 +45,11 @@ watch([elementX, elementY, isOutside], () => {
     } else if (elementY.value > 300) { // 下边界处理
       top.value = 200
     }
+
+    /* 3.2 放大镜效果 - 右侧大图放大效果  */
+    showBigImg.value = true
+  } else {
+    showBigImg.value = false
   }
 })
 </script>
@@ -56,7 +62,7 @@ watch([elementX, elementY, isOutside], () => {
     <div class="middle" ref="target">
       <img :src="imageList[activeIndex]" alt="" />
       <!-- 蒙层小滑块 -->
-      <div class="layer" :style="{ left: `${left}px`, top: `${top}px` }"></div>
+      <div class="layer" v-show="!isOutside" :style="{ left: `${left}px`, top: `${top}px` }"></div>
     </div>
     <!-- 小图列表 -->
     <ul class="small">
@@ -68,11 +74,11 @@ watch([elementX, elementY, isOutside], () => {
     <!-- 放大镜大图 -->
     <div class="large" :style="[
       {
-        backgroundImage: `url(${imageList[0]})`,
-        backgroundPositionX: `0px`,
-        backgroundPositionY: `0px`,
+        backgroundImage: `url(${imageList[activeIndex]})`,
+        backgroundPositionX: `${-left * 2}px`,
+        backgroundPositionY: `${-top * 2}px`,
       },
-    ]" v-show="false"></div>
+    ]" v-show="showBigImg"></div>
   </div>
 </template>
 
