@@ -1,15 +1,30 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import { getHotsInfoAPI } from '@/apis/detail'
+
+const props = defineProps({
+  hotType: {
+    type: Number,
+    default: 1
+  }
+})
+
+// 适配Tite
+const TITLEMAP = {
+  1: '24小时热榜',
+  2: '周热榜'
+}
+const title = computed(() => TITLEMAP[props.hotType])
+
 const routeData = useRoute()
 // console.log(routeData.params);
 
 // 获取数据
-const hotsInfo = ref({})
+const hotsInfo = ref([])
 const getHotsInfo = async () => {
-  const { result } = await getHotsInfoAPI({ id: routeData.params.tid, type: 1 })
-  // console.log(result);
+  const { result } = await getHotsInfoAPI({ id: routeData.params.tid, type: props.hotType })
+  console.log(result);
   hotsInfo.value = result
 }
 onMounted(() => getHotsInfo())
@@ -17,13 +32,15 @@ onMounted(() => getHotsInfo())
 
 <template>
   <div class="goods-hot">
-    <h3>周日榜单</h3>
+    <h3>{{ title }}</h3>
     <!-- 商品区块 -->
-    <RouterLink to="/" class="goods-item" v-for="item in 3" :key="item.id">
-      <img :src="item.picture" alt="" />
-      <p class="name ellipsis">一双男鞋</p>
-      <p class="desc ellipsis">一双好穿的男鞋</p>
-      <p class="price">&yen;200.00</p>
+    <!-- Bug：路由变化商品不刷新 -->
+    <RouterLink :to="`/category/${routeData.params.id}/detail/${item.id}`" class="goods-item" v-for="item in hotsInfo"
+      :key="item.id">
+      <img v-img-lazy="item.picture" alt="" />
+      <p class="name ellipsis">{{ item.name }}</p>
+      <p class="desc ellipsis">{{ item.desc }}</p>
+      <p class="price">&yen;{{ item.price }}</p>
     </RouterLink>
   </div>
 </template>
