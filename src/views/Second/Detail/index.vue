@@ -5,8 +5,7 @@ import { getGoodsInfoAPI } from '@/apis/detail'
 import { onMounted, ref } from "vue";
 import ImageView from "@/components/ImageView/index.vue"
 import DetailHot from "./components/DetailHot.vue";
-
-
+import XtxSku from "@/components/XtxSku/index.vue"
 
 /* 1. 获取商品详情信息*/
 const goodInfo = ref({})
@@ -25,6 +24,10 @@ onBeforeRouteUpdate((to) => {
   getGoodsInfo(to.params.tid)
 })
 
+/* sku规格被操作 */
+const skuChange = (sku) => {
+  console.log(sku);
+}
 
 </script>
 
@@ -109,6 +112,7 @@ onBeforeRouteUpdate((to) => {
                 </dl>
               </div>
               <!-- sku组件 -->
+              <XtxSku :goods="goodInfo" @change="skuChange"></XtxSku>
 
               <!-- 数据组件 -->
 
