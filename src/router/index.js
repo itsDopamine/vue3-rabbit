@@ -65,7 +65,13 @@ const router = createRouter({
     },
     { path: '/login', component: Login },
     { path: '/register', component: Register },
-  ]
+  ],
+  // 定制路由切换时的滚动行为
+  scrollBehavior () {
+    return {
+      top: 0
+    }
+  }
 })
 
 export default router
