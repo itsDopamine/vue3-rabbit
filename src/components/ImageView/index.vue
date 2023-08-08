@@ -5,7 +5,8 @@ import { ref, watch } from "vue"
 /* 1. 获取图片列表 */
 defineProps({
   imageList: {
-    type: Array
+    type: Array,
+    default: () => []
   }
 })
 
