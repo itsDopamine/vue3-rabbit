@@ -3,11 +3,14 @@
 import { onBeforeRouteUpdate, useRoute } from "vue-router"
 import { getGoodsInfoAPI } from '@/apis/detail'
 import { onMounted, ref } from "vue";
+import ImageView from "@/components/ImageView/index.vue"
 import DetailHot from "./components/DetailHot.vue";
 
+
+
+/* 1. 获取商品详情信息*/
 const goodInfo = ref({})
 const routeData = useRoute()
-// console.log(routeData);
 const getGoodsInfo = async (id = routeData.params.tid) => {
   const { result } = await getGoodsInfoAPI(id)
   console.log(result);
@@ -16,11 +19,14 @@ const getGoodsInfo = async (id = routeData.params.tid) => {
 }
 onMounted(() => getGoodsInfo())
 
-/* 使用路由导航守卫更新路由切换时的页面数据 */
+/* 2. 使用路由导航守卫更新路由切换时的页面数据 */
 onBeforeRouteUpdate((to) => {
   // 路由参数发生变化，将变化的参数传入接口重新请求数据
   getGoodsInfo(to.params.tid)
 })
+
+/* 3.  */
+
 </script>
 
 <template>
@@ -54,6 +60,7 @@ onBeforeRouteUpdate((to) => {
           <div class="goods-info">
             <div class="media">
               <!-- 图片预览区 -->
+              <ImageView :imageList="goodInfo.mainPictures"></ImageView>
 
               <!-- 统计数量 -->
               <ul class="goods-sales">
