@@ -26,12 +26,20 @@ const reqData = ref({
 })
 const getSubCategory = async (data = reqData.value) => {
   const { result } = await getSubCategoryAPI(data)
+  console.log(result);
+  // 因接口对不同标签的返回数据一致，此处对返回商品列表随机打乱处理
+  result.items.sort(() => Math.random() - 0.5)
   subDataList.value = result
 }
 onMounted(() => getSubCategory())
 
-/*  */
+/* 3.添加二级列表的筛选功能 */
+const tabChange = () => {
+  reqData.value.page = 1 // 重置页码
+  getSubCategory()
+}
 
+/* 4.添加列表触底自动加载数据功能 */
 </script>
 
 <template>
@@ -47,7 +55,8 @@ onMounted(() => getSubCategory())
       </el-breadcrumb>
     </div>
     <div class="sub-container">
-      <el-tabs v-model="reqData.sortField">
+      <!-- 3.1 绑定标签数据和tab-changge事件，触发相应的数据操作 -->
+      <el-tabs v-model="reqData.sortField" @tab-change="tabChange">
         <el-tab-pane label="最新商品" name="publishTime"></el-tab-pane>
         <el-tab-pane label="最高人气" name="orderNum"></el-tab-pane>
         <el-tab-pane label="评论最多" name="evaluateNum"></el-tab-pane>
