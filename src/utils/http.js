@@ -2,10 +2,8 @@
 import { useUserStore } from "@/stores/user";
 import axios from "axios";
 import { ElMessage } from 'element-plus'
-import { useRouter } from "vue-router";
+import router from "@/router";
 
-const router = useRouter()
-console.log(router);
 // 1. 创建axios实例
 const httpInst = axios.create({
   // 基地址
@@ -32,6 +30,7 @@ httpInst.interceptors.request.use(config => {
 httpInst.interceptors.response.use(response => {
   return response.data
 }, error => {
+  const { delUserInfo } = useUserStore()
   if (error.response) {
     // 提示
     ElMessage({
@@ -40,7 +39,9 @@ httpInst.interceptors.response.use(response => {
     })
     // 验证token(有效性)
     if (error.response.status === 401) {
-      console.log(error.response.status);
+      delUserInfo()
+      router.replace({ path: '/login' })
+      // console.log(error.response.status);
     }
   }
 
