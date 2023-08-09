@@ -4,6 +4,8 @@ import { onBeforeRouteUpdate, useRoute } from "vue-router"
 import { getGoodsInfoAPI } from '@/apis/detail'
 import { onMounted, ref } from "vue";
 import DetailHot from "./components/DetailHot.vue";
+import { ElMessage } from "element-plus";
+import { useCartStore } from "@/stores/cart";
 
 /* 1. 获取商品详情信息*/
 const goodInfo = ref({})
@@ -22,10 +24,41 @@ onBeforeRouteUpdate((to) => {
   getGoodsInfo(to.params.tid)
 })
 
-/* sku规格被操作 */
+/* 3. 操作购物车 */
+const count = ref(1) // 加购数量
+const countChange = () => {
+}
+
+// 操作sku规格
+let skuObj = {}
 const skuChange = (sku) => {
   console.log(sku);
+  skuObj = sku
 }
+
+// 加入购物车
+const cartStore = useCartStore()
+const addCart = () => {
+  if (skuObj.skuId) {
+    // sku已生成
+    cartStore.addCart({
+      id: goodInfo.value.id,
+      name: goodInfo.value.name,
+      picture: goodInfo.value.mainPictures[0],
+      price: goodInfo.value.price,
+      count: count.value,
+      skuId: skuObj.skuId,
+      attrsText: skuObj.specsText,
+      selected: true
+    })
+
+  } else {
+    // sku未生成
+    ElMessage.warning('请选择规格')
+  }
+}
+
+
 
 </script>
 
@@ -111,12 +144,18 @@ const skuChange = (sku) => {
               </div>
               <!-- sku组件 -->
               <XtxSku :goods="goodInfo" @change="skuChange"></XtxSku>
-
               <!-- 数据组件 -->
-
+              <div>
+                <dl class="number-box">
+                  <dt class="label">数量</dt>
+                  <dd class="box">
+                    <el-input-number v-model="count" @change="countChange" />
+                  </dd>
+                </dl>
+              </div>
               <!-- 按钮组件 -->
               <div>
-                <el-button size="large" class="btn">
+                <el-button size="large" class="btn" @click="addCart">
                   加入购物车
                 </el-button>
               </div>
@@ -212,6 +251,13 @@ const skuChange = (sku) => {
       color: #999;
       padding-left: 10px;
     }
+
+    dd {
+      width: 120px;
+      height: 30px;
+      border: 1px solid #e4e4e4;
+    }
+
   }
 
   .g-name {
@@ -332,6 +378,7 @@ const skuChange = (sku) => {
       }
     }
   }
+
 }
 
 .goods-tabs {
@@ -390,7 +437,6 @@ const skuChange = (sku) => {
 
 .btn {
   margin-top: 20px;
-
 }
 
 .bread-container {
