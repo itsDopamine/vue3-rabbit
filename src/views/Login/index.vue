@@ -6,7 +6,8 @@ import { ref } from "vue"
 // 表单数据
 const formData = ref({
   account: '',
-  password: ''
+  password: '',
+  agree: true
 })
 
 // 正则对象
@@ -17,6 +18,18 @@ const rules = {
   password: [
     { required: true, message: '密码不能为空', trigger: 'blur' },
     { min: 6, max: 14, message: '密码必须为6~14位', trigger: 'blur' }
+  ],
+  agree: [
+    {
+      validator: (rules, value, callback) => {
+        // 自定义校验
+        if (value) {
+          callback()
+        } else {
+          callback(new Error('请勾选同意'))
+        }
+      }
+    }
   ]
 }
 </script>
@@ -50,8 +63,8 @@ const rules = {
               <el-form-item label="密码" prop="password">
                 <el-input v-model="formData.password" />
               </el-form-item>
-              <el-form-item label-width="22px">
-                <el-checkbox size="large">
+              <el-form-item label-width="22px" prop="agree">
+                <el-checkbox size="large" v-model="formData.agree">
                   我已同意隐私条款和服务条款
                 </el-checkbox>
               </el-form-item>
