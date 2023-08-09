@@ -1,7 +1,18 @@
 <script setup>
 import { useUserStore } from "@/stores/user";
+import { ElMessage } from "element-plus";
+import { useRouter } from "vue-router";
 
-const { userInfo } = useUserStore()
+const { userInfo, delUserInfo } = useUserStore()
+const router = useRouter()
+
+/* 1. 退出登录 */
+const doLogout = () => {
+  delUserInfo()
+  // ??? 为什么此处不能直接使用 useRouter().push('/login') ？
+  ElMessage({ message: '退出成功', type: 'success', })
+  router.push('/login')
+}
 </script>
 
 <template>
@@ -11,7 +22,7 @@ const { userInfo } = useUserStore()
         <template v-if="userInfo.token">
           <li><a href="javascript:;"><i class="iconfont icon-user"></i>{{ userInfo.nickname }}</a></li>
           <li>
-            <el-popconfirm title="确认退出吗?" confirm-button-text="确认" cancel-button-text="取消">
+            <el-popconfirm @confirm="doLogout" title="确认退出吗?" confirm-button-text="确认" cancel-button-text="取消">
               <template #reference>
                 <a href="javascript:;">退出登录</a>
               </template>
