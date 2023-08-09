@@ -1,5 +1,5 @@
 // 管理用户相关数据
-import { loginAPI } from "@/apis/user"
+import { getCartAPI, loginAPI } from "@/apis/user"
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
@@ -19,3 +19,4 @@ export const useUserStore = defineStore('user', () => {
     getUserInfo
   }
 }, { persist: true, })
+
