@@ -8,6 +8,7 @@ import Home from '@/views/Second/Home/index.vue'
 import Category from '@/views/Second/Category/index.vue'
 import SubCategory from '@/views/Second/SubCategory/index.vue'
 import Detail from "@/views/Second/Detail/index.vue"
+import CartList from "@/views/Second/CartList/index.vue"
 import { h } from 'vue'
 
 
@@ -69,6 +70,10 @@ const router = createRouter({
             }
           ]
         },
+        {
+          path: '/cartlist',
+          component: CartList
+        }
         // {
         //   path: 'detail/:id',
         //   component: { render: () => h(RouterView) },
