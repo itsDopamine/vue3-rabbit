@@ -1,6 +1,7 @@
 // axios 基础封装
-
 import axios from "axios";
+import { ElMessage } from 'element-plus'
+
 
 // 1. 创建axios实例
 const httpInst = axios.create({
@@ -23,6 +24,10 @@ httpInst.interceptors.request.use(config => {
 httpInst.interceptors.response.use(response => {
   return response.data
 }, error => {
+  ElMessage({
+    message: error.response.data.message,
+    type: 'error',
+  })
   return Promise.reject(error)
 })
 

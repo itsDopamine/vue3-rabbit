@@ -1,13 +1,18 @@
 <script setup>
 import { ref } from "vue"
-
+import { loginAPI } from "@/apis/user"
+import { useRouter } from "vue-router"
+import { ElMessage } from 'element-plus'
+// import 'element-plus/theme-chalk/el-message.css'
 
 /* 1. 表单验证 */
+// 路由对象
+const router = useRouter()
 
 // 表单数据
 const formData = ref({
-  account: '',
-  password: '',
+  account: 'heima288',
+  password: 'hm#qd@23!',
   agree: true
 })
 
@@ -37,12 +42,18 @@ const rules = {
 // 登录前统一再校验一遍
 const formRef = ref(null) // 表单实例
 const doLogin = () => {
-  formRef.value.validate((valid) => {
+  formRef.value.validate(async (valid) => {
     if (valid) {
-      console.log('Ok');
+      /* 2. Login 业务 */
+      const res = await loginAPI(formData.value)
+      console.log(res);
+      ElMessage({ message: '登录成功', type: 'success', })
+      // router.push('/')
+      router.replace({ path: '/' })
     }
   })
 }
+
 </script>
 
 
@@ -72,7 +83,7 @@ const doLogin = () => {
                 <el-input v-model="formData.account" />
               </el-form-item>
               <el-form-item label="密码" prop="password">
-                <el-input v-model="formData.password" />
+                <el-input type="password" show-password v-model="formData.password" />
               </el-form-item>
               <el-form-item label-width="22px" prop="agree">
                 <el-checkbox size="large" v-model="formData.agree">
