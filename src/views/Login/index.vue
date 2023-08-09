@@ -3,6 +3,7 @@ import { ref } from "vue"
 
 
 /* 1. 表单验证 */
+
 // 表单数据
 const formData = ref({
   account: '',
@@ -32,6 +33,16 @@ const rules = {
     }
   ]
 }
+
+// 登录前统一再校验一遍
+const formRef = ref(null) // 表单实例
+const doLogin = () => {
+  formRef.value.validate((valid) => {
+    if (valid) {
+      console.log('Ok');
+    }
+  })
+}
 </script>
 
 
@@ -56,7 +67,7 @@ const rules = {
         </nav>
         <div class="account-box">
           <div class="form">
-            <el-form label-position="right" label-width="60px" status-icon :model="formData" :rules="rules">
+            <el-form label-position="right" label-width="60px" status-icon ref="formRef" :model="formData" :rules="rules">
               <el-form-item label="账户" prop="account">
                 <el-input v-model="formData.account" />
               </el-form-item>
@@ -68,7 +79,7 @@ const rules = {
                   我已同意隐私条款和服务条款
                 </el-checkbox>
               </el-form-item>
-              <el-button size="large" class="subBtn">点击登录</el-button>
+              <el-button size="large" class="subBtn" @click="doLogin">点击登录</el-button>
             </el-form>
           </div>
         </div>
