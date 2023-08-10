@@ -51,7 +51,7 @@ const addCart = () => {
       attrsText: skuObj.specsText,
       selected: true
     })
-
+    ElMessage.success(`加入购物车成功: ${goodInfo.value.name} × ${count.value}`)
   } else {
     // sku未生成
     ElMessage.warning('请选择规格')
@@ -149,13 +149,13 @@ const addCart = () => {
                 <dl class="number-box">
                   <dt class="label">数量</dt>
                   <dd class="box">
-                    <el-input-number v-model="count" @change="countChange" />
+                    <el-input-number :min="1" v-model="count" @change="countChange" />
                   </dd>
                 </dl>
               </div>
               <!-- 按钮组件 -->
               <div>
-                <el-button size="large" class="btn" @click="addCart">
+                <el-button type="primary" size="large" class="btn" @click="addCart">
                   加入购物车
                 </el-button>
               </div>
@@ -253,9 +253,24 @@ const addCart = () => {
     }
 
     dd {
-      width: 120px;
-      height: 30px;
-      border: 1px solid #e4e4e4;
+      .el-input-number {
+        width: 120px;
+        height: 30px;
+
+        // border-radius: 0%;
+        // // border: 1px solid #e4e4e4;
+        // .el-button:hover,
+        // .el-button:active,
+        // .el-button:target,
+        // .el-button:focus,
+        // .el-button:focus-visible,
+        // .el-button:focus-within,
+        // .el-button:visited {
+        //   background-color: rgba(0, 0, 0, 0) !important;
+        // }
+      }
+
+
     }
 
   }

@@ -35,12 +35,20 @@ export const useCartStore = defineStore('cart', () => {
   const totalCount = computed(() => cartList.value.reduce((prev, item) => prev + item.count, 0))
   const totalPrice = computed(() => cartList.value.reduce((prev, item) => prev + item.count * item.price, 0))
 
+  // 单选功能
+  const singleCheck = (skuId, selected) => {
+    const item = cartList.value.find((item) => item.skuId === skuId)
+    item.selected = selected
+
+  }
+
   return {
     cartList,
     totalCount,
     totalPrice,
     addCart,
-    delCart
+    delCart,
+    singleCheck
   }
 }, {
   persist: true

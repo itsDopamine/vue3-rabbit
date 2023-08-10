@@ -3,6 +3,12 @@ import { useCartStore } from "@/stores/cart"
 
 const cartStore = useCartStore()
 const cartList = cartStore.cartList
+
+// 单选回调：使单选框的状态和Pinia中cartstore对应的状态保持同步
+const singleCheck = (i, selected) => {
+  console.log(i, selected);
+  cartStore.singleCheck(i.skuId, selected)
+}
 </script>
 
 <template>
@@ -26,7 +32,8 @@ const cartList = cartStore.cartList
           <tbody>
             <tr v-for="i in cartList" :key="i.id">
               <td>
-                <el-checkbox />
+                <!-- 单选框 -->
+                <el-checkbox v-model="i.selected" />
               </td>
               <td>
                 <div class="goods">
@@ -49,7 +56,8 @@ const cartList = cartStore.cartList
               </td>
               <td class="tc">
                 <p>
-                  <el-popconfirm title="确认删除吗?" confirm-button-text="确认" cancel-button-text="取消" @confirm="delCart(i)">
+                  <el-popconfirm title="确认删除吗?" confirm-button-text="确认" cancel-button-text="取消"
+                    @confirm="cartStore.delCart(i)">
                     <template #reference>
                       <a href="javascript:;">删除</a>
                     </template>

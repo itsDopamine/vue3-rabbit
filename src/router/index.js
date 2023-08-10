@@ -71,7 +71,7 @@ const router = createRouter({
           ]
         },
         {
-          path: '/cartlist',
+          path: 'cartlist',
           component: CartList
         }
         // {
