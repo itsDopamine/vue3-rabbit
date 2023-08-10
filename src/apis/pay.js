@@ -7,8 +7,6 @@ import httpInst from "@/utils/http"
  */
 export const getPayInfoAPI = (id) => httpInst.get(`/member/order/${id}`)
 
-
-
 /**
  * @description: 跳转支付-支付宝-PC
  * @orderId string 订单id

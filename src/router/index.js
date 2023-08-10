@@ -11,6 +11,7 @@ import Detail from "@/views/Second/Detail/index.vue"
 import CartList from "@/views/Second/CartList/index.vue"
 import Checkout from "@/views/Second/Checkout/index.vue"
 import Pay from "@/views/Second/Pay/index.vue"
+import PayBack from "@/views/Second/Pay/PayBack.vue"
 import { h } from 'vue'
 
 
@@ -75,6 +76,8 @@ const router = createRouter({
         { path: 'cartlist', component: CartList },
         { path: 'checkout', component: Checkout },
         { path: 'pay', component: Pay },
+        { path: '/paycallback', component: PayBack },
+
         // {
         //   path: 'detail/:id',
         //   component: { render: () => h(RouterView) },
