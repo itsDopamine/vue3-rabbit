@@ -2,7 +2,7 @@
 import { useCartStore } from "@/stores/cart"
 
 const cartStore = useCartStore()
-const cartList = cartStore.cartList
+// const cartList = cartStore.cartList // 不要这么做，否则可能失去响应式
 
 // 多选回调：使单选框的状态和Pinia中cartstore对应的状态保持同步
 const singleCheck = (i, selected) => {
@@ -14,7 +14,6 @@ const singleCheck = (i, selected) => {
 // 全选回调
 const allCheck = (selected) => cartStore.allCheck(selected)
 
-// 统计回调
 </script>
 
 <template>
@@ -37,7 +36,7 @@ const allCheck = (selected) => cartStore.allCheck(selected)
           </thead>
           <!-- 商品列表 -->
           <tbody>
-            <tr v-for="i in cartList" :key="i.id">
+            <tr v-for="i in cartStore.cartList" :key="i.id">
               <td>
                 <!-- 多选框 -->
                 <!-- <el-checkbox v-model="i.selected" /> -->
@@ -61,7 +60,7 @@ const allCheck = (selected) => cartStore.allCheck(selected)
                 <p>&yen;{{ i.price }}</p>
               </td>
               <td class="tc">
-                <el-input-number v-model="i.count" />
+                <el-input-number :min="0" v-model="i.count" />
               </td>
               <td class="tc">
                 <p class="f16 red">&yen;{{ (i.price * i.count).toFixed(2) }}</p>
@@ -77,7 +76,7 @@ const allCheck = (selected) => cartStore.allCheck(selected)
                 </p>
               </td>
             </tr>
-            <tr v-if="cartList.length === 0">
+            <tr v-if="cartStore.cartList.length === 0">
               <td colspan="6">
                 <div class="cart-none">
                   <el-empty description="购物车列表为空">
