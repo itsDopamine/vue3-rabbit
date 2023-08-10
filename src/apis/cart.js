@@ -30,3 +30,15 @@ export const getNewCartListAPI = () => {
 export const delCartAPI = (ids) => {
   return httpInst.delete('/member/cart', { data: { ids } })
 }
+
+/**
+ * @description: 将本地商品合并到服务端购物车列表
+ * @data : 参数数组
+ *  @skuId string 商品sku的id
+ *  @selected string 商品选中状态
+ *  @count integer 商品数量
+ * @return { Promise }
+ */
+export const mergeCartAPI = (data) => {
+  return httpInst.post('/member/cart/merge', data)
+}

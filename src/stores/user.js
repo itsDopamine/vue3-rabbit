@@ -1,4 +1,5 @@
 // 管理用户相关数据
+import { mergeCartAPI } from "@/apis/cart"
 import { loginAPI } from "@/apis/user"
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
@@ -13,8 +14,15 @@ export const useUserStore = defineStore('user', () => {
   const getUserInfo = async ({ account, password }) => {
     const { result } = await loginAPI({ account, password })
     userInfo.value = result
-    // 同时获取与该用户关联的购物车信息
-    // cartStore.updateCartList()
+    // 合并本地和服务端的购物车信息
+    await mergeCartAPI(cartStore.cartList.map(item => {
+      return {
+        skuId: item.skuId,
+        selected: item.selected,
+        count: item.count
+      }
+    }))
+    cartStore.updateCartList()
   }
 
   // 2.2 定义删除用户数据的action函数

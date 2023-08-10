@@ -16,12 +16,13 @@ export const useCartStore = defineStore('cart', () => {
 
   /* 2. 定义 Action */
 
-  /* 获取最新购物车列表 */
+  /* 2.1 获取最新购物车列表 */
   const updateCartList = async () => {
     const { result } = await getNewCartListAPI()
     cartList.value = result // 覆盖本地数据
   }
-  /* 添加商品操作 */
+
+  /* 2.2 添加商品操作 */
   const addCart = async (goods) => {
     // 1.商品已存在 cartList 中，count+1
     // 2.商品不存在 追加
@@ -42,7 +43,7 @@ export const useCartStore = defineStore('cart', () => {
     }
   }
 
-  /* 删除商品操作 */
+  /* 2.4 删除商品操作 */
   const delCart = async (skuId) => {
     // 1.找到要删除项的下标值-splice
     // 2.使用数组的过滤方法-filter
@@ -57,7 +58,12 @@ export const useCartStore = defineStore('cart', () => {
     }
   }
 
-  /* 同步购物车列表的选中状态 */
+  /* 2.5 退出登录-清空购物车操作 */
+  const clearCart = async () => {
+    cartList.value = []
+  }
+
+  /* 2.3 同步购物车列表的选中状态 */
   const singleCheck = (skuId, selected) => {
     // 通过skuId找到要修改的那一项 然后把它的selected修改为传过来的selected
     const item = cartList.value.find((item) => item.skuId === skuId)
@@ -90,8 +96,10 @@ export const useCartStore = defineStore('cart', () => {
     selectedPrice,
     addCart,
     delCart,
+    clearCart,
     singleCheck,
-    allCheck
+    allCheck,
+    updateCartList
   }
 }, {
   persist: true
