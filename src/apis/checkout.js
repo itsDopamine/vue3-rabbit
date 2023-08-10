@@ -8,7 +8,14 @@ import httpInst from "@/utils/http"
  */
 export const getOrdersAPI = () => httpInst.get('/member/order/pre')
 
-
+/**
+ * @description: 提交-订单
+ * @data Object 订单相关参数
+ * @return { Promise }
+ */
+export const createOrderAPI = (data) => {
+  return httpInst.post('/member/order', data)
+}
 
 /**
  * @description: 获取-订单详情(以及支付结果)
@@ -17,15 +24,6 @@ export const getOrdersAPI = () => httpInst.get('/member/order/pre')
  */
 export const getOrdersResAPI = (id) => httpInst.get(`/member/order/${id}`)
 
-
-/**
- * @description: 提交-订单
- * @data Object 订单相关参数
- * @return { Promise }
- */
-export const postOrderAPI = (data) => {
-  return httpInst.post('/member/order', data)
-}
 
 
 /**

@@ -1,10 +1,12 @@
 <script setup>
 import { onMounted, ref } from "vue"
-import { getOrdersAPI } from "@/apis/checkout"
+import { createOrderAPI, getOrdersAPI } from "@/apis/checkout"
+import { useRouter } from "vue-router"
+import { useCartStore } from "@/stores/cart"
 
 /* 1. 获取订单详情 */
 const checkInfo = ref({})  // 订单对象
-const curAddress = ref({})  // 默认地址对象
+const curAddress = ref({})  // 地址对象
 
 const getCheckInfo = async () => {
   const { result } = await getOrdersAPI()
@@ -14,9 +16,55 @@ const getCheckInfo = async () => {
   curAddress.value = checkInfo.value.userAddresses.find(e => e.isDefault === 0)
 }
 
-
-
 onMounted(() => getCheckInfo())
+
+/* 2. 控制切换地址弹框显示隐藏 */
+const toggleFlag = ref(false)
+
+/* 3. 切换地址回调 */
+const activeAddress = ref({})  // 地址对象
+const switchAddress = (item) => {
+  activeAddress.value = item
+}
+
+// 确认切换地址
+const confirm = () => {
+  curAddress.value = activeAddress.value
+  toggleFlag.value = false
+  activeAddress.value = {}
+}
+
+/* 4. 创建并提交订单 */
+const router = useRouter()
+const cartStore = useCartStore()
+const createOrder = async () => {
+  const { result } = await createOrderAPI({
+    deliveryTimeType: 1, // integer 配送时间, 默认为1
+    payType: 1, // integer 支付方式, 默认为1(在线支付)
+    payChannel: 1, // integer 支付渠道, 默认为1(支付宝)
+    buyerMessage: '', // string 买家备注留言
+    // array [object {2}] 订单内商品集合
+    goods: checkInfo.value.goods.map(item => {
+      return {
+        skuId: item.skuId,
+        count: item.count
+      }
+    }),
+    addressId: curAddress.value.id // string 收货地址id
+  })
+  // 跳转订单支付页
+  router.push({
+    path: '/pay',
+    query: {
+      id: result.id
+    }
+  })
+  // 刷新购物车
+  cartStore.updateCartList()
+}
+
+
+const addFlag = ref(false)
 </script>
 
 <template>
@@ -105,18 +153,37 @@ onMounted(() => getCheckInfo())
             </dl>
             <dl>
               <dt>应付总额：</dt>
-              <dd class="price">{{ checkInfo.summary?.totalPayPrice.toFixed(2) }}</dd>
+              <dd class="price">¥ {{ checkInfo.summary?.totalPayPrice.toFixed(2) }}</dd>
             </dl>
           </div>
         </div>
         <!-- 提交订单 -->
         <div class="submit">
-          <el-button type="primary" size="large">提交订单</el-button>
+          <el-button @click="createOrder" type="primary" size="large">提交订单</el-button>
         </div>
       </div>
     </div>
   </div>
   <!-- 切换地址 -->
+  <el-dialog v-model="toggleFlag" title="切换收货地址" width="30%" center>
+    <div class="addressWrapper">
+      <div class="text item" @click="switchAddress(item)" :class="{ active: activeAddress.id === item.id }"
+        v-for="item in checkInfo.userAddresses" :key="item.id">
+        <ul>
+          <li><span>收<i />货<i />人：</span>{{ item.receiver }} </li>
+          <li><span>联系方式：</span>{{ item.contact }}</li>
+          <li><span>收货地址：</span>{{ item.fullLocation + item.address }}</li>
+        </ul>
+      </div>
+    </div>
+    <template #footer>
+      <span class="dialog-footer">
+        <!-- 在标签中使用ref不需要.vlaue -->
+        <el-button @click="toggleFlag = false">取消</el-button>
+        <el-button @click="confirm" type="primary">确定</el-button>
+      </span>
+    </template>
+  </el-dialog>
   <!-- 添加地址 -->
 </template>
 
