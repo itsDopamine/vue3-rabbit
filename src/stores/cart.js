@@ -31,24 +31,32 @@ export const useCartStore = defineStore('cart', () => {
     cartList.value.splice(idx, 1)
   }
 
+  /* 同步购物车列表的选中状态 */
+  const singleCheck = (skuId, selected) => {
+    // 通过skuId找到要修改的那一项 然后把它的selected修改为传过来的selected
+    const item = cartList.value.find((item) => item.skuId === skuId)
+    item.selected = selected
+  }
+
+  const allCheck = (selected) => {
+    cartList.value.forEach(e => e.selected = selected);
+  }
+
   /* 3. 定义 Getter */
   const totalCount = computed(() => cartList.value.reduce((prev, item) => prev + item.count, 0))
   const totalPrice = computed(() => cartList.value.reduce((prev, item) => prev + item.count * item.price, 0))
+  const isAll = computed(() => cartList.value.every((item) => item.selected))
 
-  // 单选功能
-  const singleCheck = (skuId, selected) => {
-    const item = cartList.value.find((item) => item.skuId === skuId)
-    item.selected = selected
-
-  }
 
   return {
     cartList,
     totalCount,
     totalPrice,
+    isAll,
     addCart,
     delCart,
-    singleCheck
+    singleCheck,
+    allCheck
   }
 }, {
   persist: true

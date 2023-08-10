@@ -4,11 +4,16 @@ import { useCartStore } from "@/stores/cart"
 const cartStore = useCartStore()
 const cartList = cartStore.cartList
 
-// 单选回调：使单选框的状态和Pinia中cartstore对应的状态保持同步
+// 多选回调：使单选框的状态和Pinia中cartstore对应的状态保持同步
 const singleCheck = (i, selected) => {
-  console.log(i, selected);
+  // console.log(i, selected);
+  // 同步到cartstore对应的状态
   cartStore.singleCheck(i.skuId, selected)
 }
+
+// 全选回调
+const allCheck = (selected) => cartStore.allCheck(selected)
+
 </script>
 
 <template>
@@ -19,7 +24,8 @@ const singleCheck = (i, selected) => {
           <thead>
             <tr>
               <th width="120">
-                <el-checkbox />
+                <!-- 全选 -->
+                <el-checkbox :model-value="cartStore.isAll" @change="allCheck" />
               </th>
               <th width="400">商品信息</th>
               <th width="220">单价</th>
@@ -32,8 +38,13 @@ const singleCheck = (i, selected) => {
           <tbody>
             <tr v-for="i in cartList" :key="i.id">
               <td>
-                <!-- 单选框 -->
-                <el-checkbox v-model="i.selected" />
+                <!-- 多选框 -->
+                <!-- <el-checkbox v-model="i.selected" /> -->
+                <!-- v-model是双向绑定指令，能响应数据状态，但不方便对变化后的数据进行命令式的操作（如调用接口） -->
+                <!-- v-model 是语法糖，实际是 model-value 和 @change 的配合实现（注：v-model在组件和表单表现形式不同，在Vue2和Vue3中也有差异） -->
+                <!-- @change事件有默认参数，在表单元素中表现为绑定的value，在事件对象中表现为$event  -->
+                <el-checkbox :model-value="i.selected" @change="(selected) => singleCheck(i, selected)" />
+
               </td>
               <td>
                 <div class="goods">
@@ -57,7 +68,7 @@ const singleCheck = (i, selected) => {
               <td class="tc">
                 <p>
                   <el-popconfirm title="确认删除吗?" confirm-button-text="确认" cancel-button-text="取消"
-                    @confirm="cartStore.delCart(i)">
+                    @confirm="cartStore.delCart(i.skuId)">
                     <template #reference>
                       <a href="javascript:;">删除</a>
                     </template>
