@@ -8,10 +8,12 @@ defineProps({
     type: String
   }
 })
+
+// console.log(a.parentId, a.goods.pId, a.goods.desc, a.goods);
 </script>
 
 <template>
-  <RouterLink :to="`/category/${parentId}/detail/${goods.id}`" class="goods-item">
+  <RouterLink :to="`/category/${parentId ? parentId : goods.parentId}/detail/${goods.id}`" class="goods-item">
     <img v-img-lazy="goods.picture" alt="" />
     <p class="name ellipsis">{{ goods.name }}</p>
     <p class="desc ellipsis">{{ goods.desc }}</p>

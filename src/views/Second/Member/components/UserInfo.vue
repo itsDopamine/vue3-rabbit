@@ -1,5 +1,28 @@
 <script setup>
-const userStore = {}
+import { getLikeListAPI } from "@/apis/user";
+import { useUserStore } from "@/stores/user";
+import { onMounted, ref } from "vue";
+import GoodsItem from '@/views/Second/Home/components/GoodsItem.vue'
+import { getGoodsInfoAPI } from "@/apis/detail";
+
+const userStore = useUserStore()
+
+const likeList = ref([])
+const getLikeList = async () => {
+  const { result } = await getLikeListAPI()
+
+  /* 解决路由的Bug */
+  result.forEach(async e => {
+    const { result } = await getGoodsInfoAPI(e.id)
+    // 增加 parentId 属性
+    e.pId = result.categories[1].id
+    // console.log(e);
+  });
+
+  likeList.value = result
+}
+onMounted(() => getLikeList())
+
 </script>
 
 <template>
@@ -32,7 +55,7 @@ const userStore = {}
         <h4 data-v-bcb266e0="">猜你喜欢</h4>
       </div>
       <div class="goods-list">
-        <!-- <GoodsItem v-for="good in likeList" :key="good.id" :good="good" /> -->
+        <GoodsItem v-for="good in likeList" :key="good.id" :goods="good" />
       </div>
     </div>
   </div>

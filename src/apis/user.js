@@ -20,3 +20,14 @@ export const loginAPI = ({ account, password }) => {
 export const getCartAPI = () => {
   return httpInst.post('/member/cart')
 }
+
+/**
+ * @description: 获取"猜你喜欢"列表
+ * @limit 最大数量
+ * @return { Promise }
+ */
+export const getLikeListAPI = (limit = 4) => {
+  return httpInst.get('/goods/relevant', {
+    params: { limit }
+  })
+}
