@@ -2,8 +2,10 @@
 import { loginAPI } from "@/apis/user"
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
+import { useCartStore } from "./cart"
 
 export const useUserStore = defineStore('user', () => {
+  const cartStore = useCartStore()
   // 1. 定义管理用户数据的state
   const userInfo = ref({})
 
@@ -11,11 +13,15 @@ export const useUserStore = defineStore('user', () => {
   const getUserInfo = async ({ account, password }) => {
     const { result } = await loginAPI({ account, password })
     userInfo.value = result
+    // 同时获取与该用户关联的购物车信息
+    // cartStore.updateCartList()
   }
 
   // 2.2 定义删除用户数据的action函数
   const delUserInfo = () => {
     userInfo.value = {}
+    // 同时删除与该用户关联的购物车信息
+    cartStore.clearCart()
   }
 
   // 3. 以对象的格式把state和action return

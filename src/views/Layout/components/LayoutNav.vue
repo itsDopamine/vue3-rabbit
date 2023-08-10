@@ -9,6 +9,7 @@ const router = useRouter()
 /* 1. 退出登录 */
 const doLogout = () => {
   userStore.delUserInfo()
+
   // ??? 为什么此处不能直接使用 useRouter().push('/login') ？
   ElMessage({ message: '退出成功', type: 'success', })
   router.push('/login')
