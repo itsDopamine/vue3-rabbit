@@ -12,6 +12,9 @@ import CartList from "@/views/Second/CartList/index.vue"
 import Checkout from "@/views/Second/Checkout/index.vue"
 import Pay from "@/views/Second/Pay/index.vue"
 import PayBack from "@/views/Second/Pay/PayBack.vue"
+import Member from "@/views/Second/Member/index.vue"
+import UserInfo from "@/views/Second/Member/components/UserInfo.vue"
+import UserOrder from "@/views/Second/Member/components/UserOrder.vue"
 import { h } from 'vue'
 
 
@@ -76,7 +79,25 @@ const router = createRouter({
         { path: 'cartlist', component: CartList },
         { path: 'checkout', component: Checkout },
         { path: 'pay', component: Pay },
-        { path: '/paycallback', component: PayBack },
+        { path: 'paycallback', component: PayBack },
+        {
+          path: 'member',
+          component: Member,
+          children: [
+            // {
+            //   path: '/',
+            //   redirect: '/user'
+            // },
+            {
+              path: '',
+              component: UserInfo
+            },
+            {
+              path: 'order',
+              component: UserOrder
+            }
+          ]
+        },
 
         // {
         //   path: 'detail/:id',
