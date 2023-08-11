@@ -1,4 +1,8 @@
 <script setup>
+import { getUserOrderAPI } from '@/apis/order';
+import { useCountDown } from '@/composables/useCountDown';
+import { onMounted, ref } from 'vue';
+
 // tab列表
 const tabTypes = [
   { name: "all", label: "全部订单" },
@@ -9,14 +13,39 @@ const tabTypes = [
   { name: "complete", label: "已完成" },
   { name: "cancel", label: "已取消" }
 ]
-// 订单列表
-const orderList = []
 
+/* 获取订单列表 */
+const orderList = ref([])
+const params = ref({
+  orderState: 0,
+  page: 1,
+  pageSize: 2
+})
+const getUserOrder = async () => {
+  const { result } = await getUserOrderAPI(params.value)
+  orderList.value = result.items
+}
+onMounted(() => getUserOrder())
+
+/* 获取倒计时函数 */
+const getTime = (countdown) => {
+  const { formatTime, start } = useCountDown()
+  start(countdown)
+  return formatTime
+}
+
+/* 切换tab时修改 orderState 参数，再次发起请求获取订单列表数据 */
+const tabChange = (type) => {
+  // type:状态数据
+  // console.log(type);
+  params.value.orderState = type
+  getUserOrder()
+}
 </script>
 
 <template>
   <div class="order-container">
-    <el-tabs>
+    <el-tabs @tab-change="tabChange">
       <!-- tab切换 -->
       <el-tab-pane v-for="item in tabTypes" :key="item.name" :label="item.label" />
 
