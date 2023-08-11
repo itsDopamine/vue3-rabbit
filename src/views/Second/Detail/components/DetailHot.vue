@@ -24,7 +24,6 @@ const routeData = useRoute()
 const hotsInfo = ref([])
 const getHotsInfo = async () => {
   const { result } = await getHotsInfoAPI({ id: routeData.params.tid, type: props.hotType })
-  console.log(result);
   hotsInfo.value = result
 }
 onMounted(() => getHotsInfo())

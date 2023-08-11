@@ -12,8 +12,6 @@ const goodInfo = ref({})
 const routeData = useRoute()
 const getGoodsInfo = async (id = routeData.params.tid) => {
   const { result } = await getGoodsInfoAPI(id)
-  console.log(result);
-  console.log(result.categories[0].id);
   goodInfo.value = result
 }
 onMounted(() => getGoodsInfo())
@@ -32,7 +30,7 @@ const countChange = () => {
 // 操作sku规格
 let skuObj = {}
 const skuChange = (sku) => {
-  console.log(sku);
+  // console.log(sku);
   skuObj = sku
 }
 
@@ -57,8 +55,6 @@ const addCart = () => {
     ElMessage.warning('请选择规格')
   }
 }
-
-
 
 </script>
 

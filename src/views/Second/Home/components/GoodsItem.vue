@@ -1,6 +1,6 @@
 <script setup>
 
-const props = defineProps({
+defineProps({
   goods: {
     type: Object,
     // default: () => { }

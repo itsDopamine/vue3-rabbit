@@ -6,7 +6,6 @@ import { getHotGoodsAPI } from '@/apis/home'
 const hotList = ref([])
 const getHotList = async () => {
   const { result } = await getHotGoodsAPI()
-  console.log(result);
   hotList.value = result
 }
 
