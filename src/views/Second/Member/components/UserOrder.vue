@@ -2,6 +2,7 @@
 import { getUserOrderAPI } from '@/apis/order';
 import { useCountDown } from '@/composables/useCountDown';
 import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 // tab列表
 const tabTypes = [
@@ -14,32 +15,68 @@ const tabTypes = [
   { name: "cancel", label: "已取消" }
 ]
 
-/* 获取订单列表 */
+/* 1.1 获取订单列表 */
 const orderList = ref([])
+const total = ref(0) // 订单数量
 const params = ref({
   orderState: 0,
   page: 1,
   pageSize: 2
 })
+const formatTimeSet = ref({})
+
+/* 1.2 同时获取每个订单的倒计时函数 */
 const getUserOrder = async () => {
   const { result } = await getUserOrderAPI(params.value)
   orderList.value = result.items
+  total.value = result.counts
+
+  // 每个订单都有对应的计时器
+  orderList.value.map(e => {
+    const { formatTime, start } = useCountDown()
+    start(e.countdown)
+    formatTimeSet.value[e.id] = formatTime
+  })
 }
 onMounted(() => getUserOrder())
 
-/* 获取倒计时函数 */
-const getTime = (countdown) => {
-  const { formatTime, start } = useCountDown()
-  start(countdown)
-  return formatTime
-}
 
-/* 切换tab时修改 orderState 参数，再次发起请求获取订单列表数据 */
+/* 2. 切换tab时修改 orderState 参数，再次发起请求获取订单列表数据 */
 const tabChange = (type) => {
   // type:状态数据
   // console.log(type);
   params.value.orderState = type
   getUserOrder()
+}
+
+/* 3. 切换分页修改 page 参数，再次获取订单列表数据 */
+const pageChange = (page) => {
+  params.value.page = page
+  getUserOrder()
+}
+
+/* 4. 订单状态显示适配*/
+// 创建格式化函数
+const fomartPayState = (payState) => {
+  const stateMap = {
+    1: '待付款',
+    2: '待发货',
+    3: '待收货',
+    4: '待评价',
+    5: '已完成',
+    6: '已取消'
+  }
+  return stateMap[payState]
+}
+
+/* 5. 支付未付款订单 */
+const router = useRouter()
+const goPay = (id) => {
+  // 跳转订单支付页
+  router.push({
+    path: '/pay',
+    query: { id }
+  })
 }
 </script>
 
@@ -62,7 +99,7 @@ const tabChange = (type) => {
               <!-- 未付款，倒计时时间还有 -->
               <span class="down-time" v-if="order.orderState === 1">
                 <i class="iconfont icon-down-time"></i>
-                <b>付款截止: {{ order.countdown }}</b>
+                <b>付款截止: {{ formatTimeSet[order.id] }}</b>
               </span>
             </div>
             <div class="body">
@@ -86,7 +123,7 @@ const tabChange = (type) => {
                 </ul>
               </div>
               <div class="column state">
-                <p>{{ order.orderState }}</p>
+                <p>{{ fomartPayState(order.orderState) }}</p>
                 <p v-if="order.orderState === 3">
                   <a href="javascript:;" class="green">查看物流</a>
                 </p>
@@ -103,7 +140,7 @@ const tabChange = (type) => {
                 <p>在线支付</p>
               </div>
               <div class="column action">
-                <el-button v-if="order.orderState === 1" type="primary" size="small">
+                <el-button @click="goPay(order.id)" v-if="order.orderState === 1" type="primary" size="small">
                   立即付款
                 </el-button>
                 <el-button v-if="order.orderState === 3" type="primary" size="small">
@@ -122,7 +159,8 @@ const tabChange = (type) => {
           </div>
           <!-- 分页 -->
           <div class="pagination-container">
-            <el-pagination background layout="prev, pager, next" />
+            <el-pagination :total="total" @current-change="pageChange" :page-size="params.pageSize" background
+              layout="prev, pager, next" />
           </div>
         </div>
       </div>

@@ -11,13 +11,14 @@ const likeList = ref([])
 const getLikeList = async () => {
   const { result } = await getLikeListAPI()
 
-  /* 解决路由的Bug */
-  result.forEach(async e => {
+  /* 路由Bug：子组件GoodsItem无法接收到异步产生的parentId值 */
+  await result.forEach(async (e) => {
     const { result } = await getGoodsInfoAPI(e.id)
     // 增加 parentId 属性
     e.pId = result.categories[1].id
     // console.log(e);
   });
+  console.log(result);
 
   likeList.value = result
 }
@@ -55,7 +56,7 @@ onMounted(() => getLikeList())
         <h4 data-v-bcb266e0="">猜你喜欢</h4>
       </div>
       <div class="goods-list">
-        <GoodsItem v-for="good in likeList" :key="good.id" :goods="good" />
+        <GoodsItem v-for="good in likeList" :key="good.id" :parentId="good.pId" :goods="good" />
       </div>
     </div>
   </div>
