@@ -11,6 +11,7 @@ import ElementPlus from 'unplugin-element-plus/vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: '/rabbitshop',
   plugins: [
     vue(),
     AutoImport({
@@ -30,7 +31,7 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
-  publicPath: './',
+  // publicPath: './',
   css: {
     preprocessorOptions: {
       scss: {
