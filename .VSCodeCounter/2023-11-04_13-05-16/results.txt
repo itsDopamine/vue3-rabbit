@@ -1,0 +1,123 @@
+Date : 2023-11-04 13:05:16
+Directory : f:\Web\vue3-rabbit\src
+Total : 58 files,  4264 codes, 507 comments, 705 blanks, all 5476 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| Vue        |         30 |      3,620 |        230 |        578 |      4,428 |
+| JavaScript |         22 |        438 |        267 |         96 |        801 |
+| SCSS       |          3 |        118 |          8 |          9 |        135 |
+| CSS        |          2 |         87 |          2 |         21 |        110 |
+| XML        |          1 |          1 |          0 |          1 |          2 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++-------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                    | files      | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                       |         58 |      4,264 |        507 |        705 |      5,476 |
+| . (Files)                                                               |          2 |         26 |          4 |         11 |         41 |
+| apis                                                                    |         10 |        106 |        140 |         24 |        270 |
+| assets                                                                  |          3 |         88 |          2 |         22 |        112 |
+| components                                                              |          4 |        290 |         53 |         37 |        380 |
+| components (Files)                                                      |          1 |          8 |          1 |          1 |         10 |
+| components\ImageView                                                    |          1 |        107 |         18 |         15 |        140 |
+| components\XtxSku                                                       |          2 |        175 |         34 |         21 |        230 |
+| composables                                                             |          1 |         25 |         13 |          4 |         42 |
+| directives                                                              |          1 |         18 |         11 |          2 |         31 |
+| router                                                                  |          1 |         75 |         41 |          8 |        124 |
+| stores                                                                  |          3 |        115 |         30 |         26 |        171 |
+| styles                                                                  |          3 |        118 |          8 |          9 |        135 |
+| styles (Files)                                                          |          2 |         99 |          2 |          9 |        110 |
+| styles\element                                                          |          1 |         19 |          6 |          0 |         25 |
+| utils                                                                   |          1 |         34 |         12 |          7 |         53 |
+| views                                                                   |         29 |      3,369 |        193 |        555 |      4,117 |
+| views\Layout                                                            |          6 |        694 |         33 |        108 |        835 |
+| views\Layout (Files)                                                    |          1 |         24 |         16 |          4 |         44 |
+| views\Layout\components                                                 |          5 |        670 |         17 |        104 |        791 |
+| views\Login                                                             |          2 |        300 |          9 |         45 |        354 |
+| views\Second                                                            |         21 |      2,375 |        151 |        402 |      2,928 |
+| views\Second\CartList                                                   |          1 |        187 |         13 |         31 |        231 |
+| views\Second\Category                                                   |          3 |        148 |         11 |         32 |        191 |
+| views\Second\Category (Files)                                           |          1 |        121 |          4 |         23 |        148 |
+| views\Second\Category\composables                                       |          2 |         27 |          7 |          9 |         43 |
+| views\Second\Checkout                                                   |          1 |        337 |         19 |         46 |        402 |
+| views\Second\Detail                                                     |          2 |        426 |         48 |         72 |        546 |
+| views\Second\Detail (Files)                                             |          1 |        353 |         43 |         60 |        456 |
+| views\Second\Detail\components                                          |          1 |         73 |          5 |         12 |         90 |
+| views\Second\Home                                                       |          8 |        494 |         13 |         87 |        594 |
+| views\Second\Home (Files)                                               |          1 |         17 |          0 |          2 |         19 |
+| views\Second\Home\components                                            |          7 |        477 |         13 |         85 |        575 |
+| views\Second\Member                                                     |          3 |        477 |         21 |         79 |        577 |
+| views\Second\Member (Files)                                             |          1 |         77 |          1 |         12 |         90 |
+| views\Second\Member\components                                          |          2 |        400 |         20 |         67 |        487 |
+| views\Second\Pay                                                        |          2 |        197 |         12 |         37 |        246 |
+| views\Second\SubCategory                                                |          1 |        109 |         14 |         18 |        141 |
++-------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                | language   | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| f:\Web\vue3-rabbit\src\App.vue                                          | Vue        |         10 |          1 |          2 |         13 |
+| f:\Web\vue3-rabbit\src\apis\cart.js                                     | JavaScript |         15 |         25 |          4 |         44 |
+| f:\Web\vue3-rabbit\src\apis\category.js                                 | JavaScript |         18 |         22 |          4 |         44 |
+| f:\Web\vue3-rabbit\src\apis\checkout.js                                 | JavaScript |          5 |         11 |          2 |         18 |
+| f:\Web\vue3-rabbit\src\apis\detail.js                                   | JavaScript |         17 |         12 |          2 |         31 |
+| f:\Web\vue3-rabbit\src\apis\home.js                                     | JavaScript |         18 |         24 |          5 |         47 |
+| f:\Web\vue3-rabbit\src\apis\layout.js                                   | JavaScript |          4 |          5 |          1 |         10 |
+| f:\Web\vue3-rabbit\src\apis\order.js                                    | JavaScript |          4 |         10 |          1 |         15 |
+| f:\Web\vue3-rabbit\src\apis\pay.js                                      | JavaScript |          7 |         12 |          1 |         20 |
+| f:\Web\vue3-rabbit\src\apis\testAPI.js                                  | JavaScript |          4 |          3 |          1 |          8 |
+| f:\Web\vue3-rabbit\src\apis\user.js                                     | JavaScript |         14 |         16 |          3 |         33 |
+| f:\Web\vue3-rabbit\src\assets\base.css                                  | CSS        |         58 |          2 |         14 |         74 |
+| f:\Web\vue3-rabbit\src\assets\logo.svg                                  | XML        |          1 |          0 |          1 |          2 |
+| f:\Web\vue3-rabbit\src\assets\main.css                                  | CSS        |         29 |          0 |          7 |         36 |
+| f:\Web\vue3-rabbit\src\components\ImageView\index.vue                   | Vue        |        107 |         18 |         15 |        140 |
+| f:\Web\vue3-rabbit\src\components\XtxSku\index.vue                      | Vue        |        161 |         25 |         15 |        201 |
+| f:\Web\vue3-rabbit\src\components\XtxSku\power-set.js                   | JavaScript |         14 |          9 |          6 |         29 |
+| f:\Web\vue3-rabbit\src\components\index.js                              | JavaScript |          8 |          1 |          1 |         10 |
+| f:\Web\vue3-rabbit\src\composables\useCountDown.js                      | JavaScript |         25 |         13 |          4 |         42 |
+| f:\Web\vue3-rabbit\src\directives\index.js                              | JavaScript |         18 |         11 |          2 |         31 |
+| f:\Web\vue3-rabbit\src\main.js                                          | JavaScript |         16 |          3 |          9 |         28 |
+| f:\Web\vue3-rabbit\src\router\index.js                                  | JavaScript |         75 |         41 |          8 |        124 |
+| f:\Web\vue3-rabbit\src\stores\cart.js                                   | JavaScript |         71 |         20 |         15 |        106 |
+| f:\Web\vue3-rabbit\src\stores\navList.js                                | JavaScript |         14 |          3 |          5 |         22 |
+| f:\Web\vue3-rabbit\src\stores\user.js                                   | JavaScript |         30 |          7 |          6 |         43 |
+| f:\Web\vue3-rabbit\src\styles\common.scss                               | SCSS       |         94 |          2 |          9 |        105 |
+| f:\Web\vue3-rabbit\src\styles\element\index.scss                        | SCSS       |         19 |          6 |          0 |         25 |
+| f:\Web\vue3-rabbit\src\styles\var.scss                                  | SCSS       |          5 |          0 |          0 |          5 |
+| f:\Web\vue3-rabbit\src\utils\http.js                                    | JavaScript |         34 |         12 |          7 |         53 |
+| f:\Web\vue3-rabbit\src\views\Layout\components\HeaderCart.vue           | Vue        |        193 |          1 |         30 |        224 |
+| f:\Web\vue3-rabbit\src\views\Layout\components\LayoutFixed.vue          | Vue        |         96 |          8 |         18 |        122 |
+| f:\Web\vue3-rabbit\src\views\Layout\components\LayoutFooter.vue         | Vue        |        199 |          3 |         26 |        228 |
+| f:\Web\vue3-rabbit\src\views\Layout\components\LayoutHeader.vue         | Vue        |        114 |          3 |         19 |        136 |
+| f:\Web\vue3-rabbit\src\views\Layout\components\LayoutNav.vue            | Vue        |         68 |          2 |         11 |         81 |
+| f:\Web\vue3-rabbit\src\views\Layout\index.vue                           | Vue        |         24 |         16 |          4 |         44 |
+| f:\Web\vue3-rabbit\src\views\Login\index.vue                            | Vue        |        292 |          9 |         42 |        343 |
+| f:\Web\vue3-rabbit\src\views\Login\register.vue                         | Vue        |          8 |          0 |          3 |         11 |
+| f:\Web\vue3-rabbit\src\views\Second\CartList\index.vue                  | Vue        |        187 |         13 |         31 |        231 |
+| f:\Web\vue3-rabbit\src\views\Second\Category\composables\useBanner.js   | JavaScript |         11 |          2 |          5 |         18 |
+| f:\Web\vue3-rabbit\src\views\Second\Category\composables\useCategory.js | JavaScript |         16 |          5 |          4 |         25 |
+| f:\Web\vue3-rabbit\src\views\Second\Category\index.vue                  | Vue        |        121 |          4 |         23 |        148 |
+| f:\Web\vue3-rabbit\src\views\Second\Checkout\index.vue                  | Vue        |        337 |         19 |         46 |        402 |
+| f:\Web\vue3-rabbit\src\views\Second\Detail\components\DetailHot.vue     | Vue        |         73 |          5 |         12 |         90 |
+| f:\Web\vue3-rabbit\src\views\Second\Detail\index.vue                    | Vue        |        353 |         43 |         60 |        456 |
+| f:\Web\vue3-rabbit\src\views\Second\Home\components\GoodsItem.vue       | Vue        |         49 |          1 |         11 |         61 |
+| f:\Web\vue3-rabbit\src\views\Second\Home\components\HomeBanner.vue      | Vue        |         33 |          1 |          6 |         40 |
+| f:\Web\vue3-rabbit\src\views\Second\Home\components\HomeCategory.vue    | Vue        |        130 |          2 |         23 |        155 |
+| f:\Web\vue3-rabbit\src\views\Second\Home\components\HomeHot.vue         | Vue        |         53 |          2 |         10 |         65 |
+| f:\Web\vue3-rabbit\src\views\Second\Home\components\HomeNew.vue         | Vue        |         58 |          1 |         12 |         71 |
+| f:\Web\vue3-rabbit\src\views\Second\Home\components\HomePanel.vue       | Vue        |         47 |          6 |          5 |         58 |
+| f:\Web\vue3-rabbit\src\views\Second\Home\components\HomeProduct.vue     | Vue        |        107 |          0 |         18 |        125 |
+| f:\Web\vue3-rabbit\src\views\Second\Home\index.vue                      | Vue        |         17 |          0 |          2 |         19 |
+| f:\Web\vue3-rabbit\src\views\Second\Member\components\UserInfo.vue      | Vue        |        129 |          4 |         22 |        155 |
+| f:\Web\vue3-rabbit\src\views\Second\Member\components\UserOrder.vue     | Vue        |        271 |         16 |         45 |        332 |
+| f:\Web\vue3-rabbit\src\views\Second\Member\index.vue                    | Vue        |         77 |          1 |         12 |         90 |
+| f:\Web\vue3-rabbit\src\views\Second\Pay\PayBack.vue                     | Vue        |         69 |          5 |         13 |         87 |
+| f:\Web\vue3-rabbit\src\views\Second\Pay\index.vue                       | Vue        |        128 |          7 |         24 |        159 |
+| f:\Web\vue3-rabbit\src\views\Second\SubCategory\index.vue               | Vue        |        109 |         14 |         18 |        141 |
+| Total                                                                   |            |      4,264 |        507 |        705 |      5,476 |
++-------------------------------------------------------------------------+------------+------------+------------+------------+------------+

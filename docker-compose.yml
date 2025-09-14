@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  web:
+    # 指定 build 配置，使其自动构建镜像并启动容器
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    image: xiaotuixian_nginx:1.0
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 80:80
+    container_name: xiaotuixian_nginx
